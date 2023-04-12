@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Before, During, and After</title>
+        <link rel="icon" type="image/x-icon" href="https://pngimg.com/uploads/dough/dough_PNG4.png">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <header>
+            <a href="https://zhuzhuchen.wordpress.com/2020/09/13/20162019-catalogue/" target="_blank">old art plug</a>
+            <!-- filler rectangle -->
+            <div></div>
+        </header>
+        <body>
+            <!-- Title section -->
+            <section>
+                <div class="rellax" data-rellax-speed="-5">
+                    <h1>Before</h1>
+                </div>
+                <div class="rellax" data-rellax-speed="-3">
+                    <h2>During</h2>
+                </div>
+                <div class="rellax" data-rellax-speed="-2">
+                    <h1>&amp;After</h1>
+                </div>
+                <!-- Bread foreground -->
+                <div class="foreground rellax" data-rellax-speed="25">
+                    <img src="imgs\foreground.png" alt="foreground breds">
+                </div>
+                
+                <!-- Source: Rellax by Dixon and Moe on Github -->
+                <script src="https://cdn.jsdelivr.net/gh/dixonandmoe/rellax@master/rellax.min.js"></script>
+                <script>
+                    // Accepts any class name
+                    var rellax = new Rellax('.rellax');
+                </script>
+            </section>
+
+            <!-- Filler text section -->
+            <section>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                    laboris nisi ut aliquip ex ea commodo consequat. <br/>
+                    Now try clicky click the "tabs" below with more clicky links!
+                </p>
+            </section>
+
+            <!-- Linkey tabs section -->
+            <section>
+                <!-- BUTTONS FOR NAV TABS -->
+                <script src="tabs.js"></script>
+                <div class="bar">
+                    <div><button onclick="openTab('saw')">WITNESS</button></div>
+                    <div><button onclick="openTab('need')">NECESSITIES</button></div>
+                </div>
+
+
+                <!-- TAB CONTENTS -->
+                <div id="saw" class="tab">
+                    <h3>NOW, <br/><a href="wood/wood.html">YOU KNOW WHAT I SAW?</a></h3>
+                </div>
+                
+                <div id="need" class="tab" style="display:none">
+                    <h3>THEN, <br/><a href="bred/dough.html">WHAT DO YOU NEED?</a></h3>
+                </div>
+            </section>
+
+
+        </body>
+    </body>
+</html>
