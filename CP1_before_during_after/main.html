@@ -11,21 +11,21 @@
             <!-- filler rectangle -->
             <div></div>
         </header>
-        <body>
+        <main>
             <!-- Title section -->
-            <section>
+            <section id="title">
                 <div class="rellax" data-rellax-speed="-5">
                     <h1>Before</h1>
                 </div>
                 <div class="rellax" data-rellax-speed="-3">
                     <h2>During</h2>
                 </div>
-                <div class="rellax" data-rellax-speed="-2">
-                    <h1>&amp;After</h1>
-                </div>
                 <!-- Bread foreground -->
                 <div class="foreground rellax" data-rellax-speed="25">
                     <img src="imgs\foreground.png" alt="foreground breds">
+                </div>
+                <div class="rellax" data-rellax-speed="-2">
+                    <h1>&amp;After</h1>
                 </div>
                 
                 <!-- Source: Rellax by Dixon and Moe on Github -->
@@ -39,10 +39,9 @@
             <!-- Filler text section -->
             <section>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat. <br/>
-                    Now try clicky click the "tabs" below with more clicky links!
+                    Try clicky click the "tabs" below with more clicky links! Choose "Witness" or "NECESSITIES" to
+                    witness the craft of before, during, and after! You will be directed back home after your journey.
+                    Here's another line to make this block of text look more aesthetic.
                 </p>
             </section>
 
@@ -51,8 +50,8 @@
                 <!-- BUTTONS FOR NAV TABS -->
                 <script src="tabs.js"></script>
                 <div class="bar">
-                    <div><button onclick="openTab('saw')">WITNESS</button></div>
-                    <div><button onclick="openTab('need')">NECESSITIES</button></div>
+                    <button onclick="openTab('saw')">WITNESS</button>
+                    <button onclick="openTab('need')">NECESSITIES</button>
                 </div>
 
 
@@ -67,6 +66,6 @@
             </section>
 
 
-        </body>
+        </main>
     </body>
 </html>
