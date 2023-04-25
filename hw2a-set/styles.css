@@ -50,6 +50,10 @@ h2 {
   font-size: 14pt;
 }
 
+.hidden {
+  display: none;
+}
+
 .card {
   width: 220px;
   height: 95px;
