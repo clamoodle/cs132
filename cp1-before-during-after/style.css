@@ -46,6 +46,7 @@ a:hover {
 }
 
 body {
+  width: 100lvw;
   min-height: 100svh;
   overflow-x: hidden;
   background-image: linear-gradient(black, rgb(51, 0, 9));
@@ -54,10 +55,9 @@ body {
 /* Gradient rectangle */
 #filler {
   width: 100%;
-  height: 50svh;
+  height: 51svh;
   background-image: linear-gradient(black 87%, rgba(0, 0, 0, 0));
   position: absolute;
-  padding: 0;
   z-index: 3;
 }
 
@@ -72,15 +72,23 @@ header > a:visited {
 
 #title {
   padding-top: 45svh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 #title > * {
-  margin: 0 -20% 50svh;
+  margin: 0 0% 50svh;
+}
+
+.rellax {
+  display: flex;
+  justify-content: center;
 }
 
 .foreground {
   position: absolute;
-  top: 200svh;
+  top: 175svh;
   z-index: 1;
 }
 
@@ -103,7 +111,7 @@ h1 {
 }
 
 h2 {
-  font-size: 2500%;
+  font-size: 26svw;
 }
 
 h2,
@@ -158,10 +166,6 @@ h3 > a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.action {
-  top: 60%;
 }
 
 button {
