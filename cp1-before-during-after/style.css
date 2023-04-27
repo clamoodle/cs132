@@ -52,7 +52,7 @@ body {
 }
 
 /* Gradient rectangle */
-header > div {
+#filler {
   width: 100%;
   height: 50svh;
   background-image: linear-gradient(black 87%, rgba(0, 0, 0, 0));
