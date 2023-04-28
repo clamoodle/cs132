@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+  Author: Pearl Chen
+  Date: Apr 27, 2023
+  HTML for the landing welcome/login page of Set World, a game where you can play variations of the
+  Set game and buy stuff as a cute lil' pixel guy! (Yes, Set Penguin.)
+-->
+<html>
+    <head>
+        <title>Set World</title>
+        <link rel="stylesheet" href="index-styles.css">
+        <script src="utils.js"></script>
+        <script defer src="welcome.js"></script>
+    </head>
+    <body>
+        <!-- Landing page, where user selects whether yes/no music -->
+        <section id="sound-menu">
+            <h2>Would you like music?</h2>
+            <div>
+                <button id="music-button">Yes Please</button>
+                <button id="mute-button">No It's 3 a.m.</button>
+            </div>
+        </section>
+
+        <!-- Welcome page, where user chooses to log-in or create account -->
+        <section id="welcome-view" class="hidden">
+            <header>
+                <img id="sound-button" src="media/sound-button.png">
+            </header>
+            <body>
+                <audio
+                id="welcome-song"
+                loop
+                src="media/genius-silly-adventurous-theme.wav"></audio>
+                <h1>Set World</h1>
+                <div>
+                    <button id="login-button">Log In</button>
+                    <button id="create-button">Create New Character</button>
+                </div>
+            </body>
+        </section>
+
+        <!-- Log-in form, overlays the welcome page -->
+        <section id="login-view" class="hidden">
+            <form>
+                <label for="username">Username:</label>
+                <input type="text" />
+                <label for="password">Password:</label>
+                <input type="password" />
+            </form>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,69 @@
+/*
+  NAME: Pearl Chen
+  DATE: Apr 27, 2023
+
+  style page for index.html
+*/
+
+/* Silkscreen, Designed by Jason Kottke, Regular400 & Bold700 */
+@import url("https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap");
+
+body {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    color: blanchedalmond;
+    font-family: "Silkscreen", "Courier New", Courier, monospace;
+    font-weight: 400;
+}
+
+header {
+    width: 100%;
+    background-color: rgb(17, 132, 226);
+    padding: 2svh;
+    /* padding-left: 2svh; */
+}
+
+h1 {
+    font-size: 15svw;
+    letter-spacing: 5svw;
+}
+
+button,
+#sound-button {
+    cursor: pointer;
+}
+
+button {
+    background-color: black;
+    border: 5px solid blanchedalmond;
+}
+
+#sound-button {
+    width: 3svw;
+}
+
+div,
+section {
+    /* display: flex; */
+    /* justify-content: space-evenly;
+    align-items: center; */
+}
+
+section {
+    /* flex-direction: column; */
+}
+
+#sound-menu {
+    text-align: center;
+    /* color: blanchedalmond;
+    background-color: black; */
+    height: 100svh;
+}
+
+.hidden {
+    display: none;
+}
