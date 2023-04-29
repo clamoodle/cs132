@@ -7,29 +7,43 @@
 
 /* Silkscreen, Designed by Jason Kottke, Regular400 & Bold700 */
 @import url("https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap");
+/* Reenie Beanie, Regular400 */
+@import url('https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap');
 
 body {
-    background-color: black;
+    background-color: rgb(178, 203, 228); /* sky blue */
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 * {
     color: blanchedalmond;
-    font-family: "Silkscreen", "Courier New", Courier, monospace;
+    font-family: "Reenie Beanie", cursive;
     font-weight: 400;
+
+    /* No selection highlight */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
 }
 
 header {
     width: 100%;
-    background-color: rgb(17, 132, 226);
+    /* background-color: rgb(17, 132, 226); */
     padding: 2svh;
     /* padding-left: 2svh; */
 }
 
 h1 {
-    font-size: 15svw;
+    font-size: 1svw;
     letter-spacing: 5svw;
+    white-space: nowrap;
+    text-align: center;
 }
 
 button,
@@ -38,29 +52,23 @@ button,
 }
 
 button {
-    background-color: black;
-    border: 5px solid blanchedalmond;
+    background-color: rgb(91, 79, 145);
+    /* border: 5px solid blanchedalmond; */
 }
 
 #sound-button {
     width: 3svw;
 }
 
-div,
 section {
-    /* display: flex; */
-    /* justify-content: space-evenly;
-    align-items: center; */
-}
-
-section {
-    /* flex-direction: column; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #sound-menu {
     text-align: center;
-    /* color: blanchedalmond;
-    background-color: black; */
+    background-color: black;
     height: 100svh;
 }
 
