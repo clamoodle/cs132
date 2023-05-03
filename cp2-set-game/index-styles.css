@@ -8,18 +8,50 @@
 /* Silkscreen, Designed by Jason Kottke, Regular400 & Bold700 */
 @import url("https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap");
 /* Reenie Beanie, Regular400 */
-@import url('https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap');
+/* not used */
+@import url("https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap");
+/* Big Shoulders Display, Light 200 */
+/* Be Vietnam Pro, Black 900 Italic, Thin 100 Italic */
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@1,100;1,900&family=Big+Shoulders+Display:wght@200&display=swap");
+
+/* Color theme Source: Adobe Colorwheels Hiver 2023, GUIOT Damien */
+/* Color Theme Swatches in RGBA */
+.Hiver-2023-1-rgba {
+    color: rgba(216, 160, 170, 1);
+} /* pink */
+.Hiver-2023-2-rgba {
+    color: rgba(143, 164, 191, 1);
+} /* light blue */
+.Hiver-2023-3-rgba {
+    color: rgba(132, 146, 165, 1);
+} /* darker blue */
+.Hiver-2023-4-rgba {
+    color: rgba(216, 192, 184, 1);
+} /* beige */
+.Hiver-2023-5-rgba {
+    color: rgba(216, 167, 156, 1);
+} /* light orange */
 
 body {
-    background-color: rgb(178, 203, 228); /* sky blue */
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
 * {
     color: blanchedalmond;
-    font-family: "Reenie Beanie", cursive;
+    font-family: "Silkscreen", "Courier New", Courier, monospace;
     font-weight: 400;
 
     /* No selection highlight */
@@ -33,17 +65,30 @@ body {
 }
 
 header {
+    position: absolute;
+    top: 0;
     width: 100%;
-    /* background-color: rgb(17, 132, 226); */
     padding: 2svh;
     /* padding-left: 2svh; */
+    z-index: 3;
 }
 
 h1 {
-    font-size: 1svw;
-    letter-spacing: 5svw;
+    /* font-family: "Big Shoulders Display", sans-serif; */
+    text-transform: uppercase;
+    /* font-size: 2svw; */
+    /* letter-spacing: 5rem; */
     white-space: nowrap;
     text-align: center;
+    letter-spacing: 2rem;
+    font-family: "Big Shoulders Display", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+    font-size: 3svw;
+    /* Source: https://cssgradient.io/blog/css-gradient-text/ */
+    background: -webkit-linear-gradient(#eee, #333);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 button,
@@ -52,18 +97,71 @@ button,
 }
 
 button {
-    background-color: rgb(91, 79, 145);
+    background-color: rgba(132, 146, 165, 1);
     /* border: 5px solid blanchedalmond; */
+    border: none;
+    padding: 7px 10px;
+    margin: 20px;
 }
 
 #sound-button {
     width: 3svw;
 }
 
+div,
 section {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+section {
+    height: 100svh;
+    flex-direction: column;
+}
+
+#welcome-view {
+    background-image: linear-gradient(#d9c1b8, rgba(143, 164, 191, 1));
+}
+
+.foreground {
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+}
+
+.sliding-cards {
+    position: fixed;
+    background-repeat: repeat-x;
+    top: 0;
+    left: 0;
+    width: 300svw;
+    height: 100svh;
+    z-index: 0;
+}
+
+/* small faraway background cards */
+.sliding-cards:first-child {
+    background-image: url("media/small-bg-cards.png");
+    animation: slide 150s linear infinite;
+    background-size: 50%;
+    opacity: 0.4;
+}
+
+/* big closeup background cards */
+.sliding-cards:nth-child(2) {
+    background-image: url("media/big-bg-cards.png");
+    background-position: 0% 100%;
+    animation: slide 50s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-100svw, 0, 0);
+    }
 }
 
 #sound-menu {
@@ -71,6 +169,10 @@ section {
     background-color: black;
     height: 100svh;
 }
+
+/* #login-view {
+
+} */
 
 .hidden {
     display: none;
