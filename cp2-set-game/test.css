@@ -1,0 +1,34 @@
+.sliding-cards {
+    position: fixed;
+    background-repeat: repeat-x;
+    top: 0;
+    left: 0;
+    width: 600svw;
+    height: 100svh;
+    z-index: 0;
+}
+
+/* small faraway background cards */
+.sliding-cards:first-child {
+    background-image: url("media/small-bg-cards.png");
+    animation: slide 150s linear infinite;
+    background-size: 50%;
+    opacity: 0.4;
+}
+
+/* big closeup background cards */
+.sliding-cards:nth-child(2) {
+    background-image: url("media/big-bg-cards.png");
+    background-size: 300svw;
+    background-position: 0% 90%;
+    animation: slide 50s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-300svw, 0, 0);
+    }
+}

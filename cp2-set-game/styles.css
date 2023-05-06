@@ -10,32 +10,20 @@
 /* Reenie Beanie, Regular400 */
 /* not used */
 @import url("https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap");
+/* Darumadrop One Regular 400 */
+@import url("https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap");
 /* Big Shoulders Display, Light 200 */
 /* Be Vietnam Pro, Black 900 Italic, Thin 100 Italic */
 @import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@1,100;1,900&family=Big+Shoulders+Display:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Foldit:wght@300&display=swap");
 
-/* Color theme Source: Adobe Colorwheels Hiver 2023, GUIOT Damien */
-/* Color Theme Swatches in RGBA */
-.Hiver-2023-1-rgba {
-    color: rgba(216, 160, 170, 1);
-} /* pink */
-.Hiver-2023-2-rgba {
-    color: rgba(143, 164, 191, 1);
-} /* light blue */
-.Hiver-2023-3-rgba {
-    color: rgba(132, 146, 165, 1);
-} /* darker blue */
-.Hiver-2023-4-rgba {
-    color: rgba(216, 192, 184, 1);
-} /* beige */
-.Hiver-2023-5-rgba {
-    color: rgba(216, 167, 156, 1);
-} /* light orange */
 
 body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background-image: url(media/background.png);
+    background-size: 300svw 100svh;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -62,16 +50,42 @@ body {
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
+
+    /* for crisp pixel art upon resize */
+    /* Source: https://css-tricks.com/almanac/properties/i/image-rendering/ */
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
 }
 
 header {
     position: absolute;
-    top: 0;
+    top: 5px;
+    left: 25px;
     width: 100%;
-    padding: 2svh;
-    /* padding-left: 2svh; */
-    z-index: 3;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    z-index: 1;
 }
+
+header>div {
+    height: 50px;
+    width: 50px;
+    background-size: 1920px;
+    margin: 5px 0px;
+}
+
+#music-toggle {
+    background-image: url("media/music-off-button.png");
+    background-position: -53px -9px;
+}
+
+#menu-button {
+    background-image: url("media/menu-button.png");
+    background-position: -9px -9px;
+}
+
 
 h1 {
     /* font-family: "Big Shoulders Display", sans-serif; */
@@ -81,31 +95,37 @@ h1 {
     white-space: nowrap;
     text-align: center;
     letter-spacing: 2rem;
-    font-family: "Big Shoulders Display", sans-serif;
-    font-weight: 200;
-    font-style: normal;
-    font-size: 3svw;
+    /* font-family: "Big Shoulders Display", sans-serif; */
+    font-family: "Foldit", cursive;
+    /* font-weight: 200; */
+    /* font-style: normal; */
+    margin: 0;
+    font-size: 35svh;
     /* Source: https://cssgradient.io/blog/css-gradient-text/ */
-    background: -webkit-linear-gradient(#eee, #333);
+    background: -webkit-linear-gradient(white 10%, rgb(0, 0, 0, 0));
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-text-fill-color: rgba(0,0,0, 0);
 }
 
 button,
-#sound-button {
+.ui {
     cursor: pointer;
 }
 
 button {
-    background-color: rgba(132, 146, 165, 1);
+    background-color: rgb(60, 134, 156);
     /* border: 5px solid blanchedalmond; */
     border: none;
     padding: 7px 10px;
     margin: 20px;
 }
 
-#sound-button {
-    width: 3svw;
+button:hover {
+    color: white;
+    /* box-shadow: inset 0px 0px 40px rgba(154, 169, 189, 0.5);
+    box-shadow: 0px 0px 40px rgba(154, 169, 189, 0.5); */
+    background-color: rgba(141,202,252);
 }
 
 div,
@@ -120,39 +140,21 @@ section {
     flex-direction: column;
 }
 
-#welcome-view {
-    background-image: linear-gradient(#d9c1b8, rgba(143, 164, 191, 1));
-}
-
 .foreground {
-    flex-direction: column;
     position: relative;
     z-index: 2;
 }
 
-.sliding-cards {
+/* animation made for images 3x screen width to loop */
+.sliding-layer {
     position: fixed;
     background-repeat: repeat-x;
     top: 0;
     left: 0;
-    width: 300svw;
+    width: 600svw;
     height: 100svh;
     z-index: 0;
-}
-
-/* small faraway background cards */
-.sliding-cards:first-child {
-    background-image: url("media/small-bg-cards.png");
-    animation: slide 150s linear infinite;
-    background-size: 50%;
-    opacity: 0.4;
-}
-
-/* big closeup background cards */
-.sliding-cards:nth-child(2) {
-    background-image: url("media/big-bg-cards.png");
-    background-position: 0% 100%;
-    animation: slide 50s linear infinite;
+    animation: slide linear infinite;
 }
 
 @keyframes slide {
@@ -160,19 +162,9 @@ section {
         transform: translate3d(0, 0, 0);
     }
     100% {
-        transform: translate3d(-100svw, 0, 0);
+        transform: translate3d(-300svw, 0, 0);
     }
 }
-
-#sound-menu {
-    text-align: center;
-    background-color: black;
-    height: 100svh;
-}
-
-/* #login-view {
-
-} */
 
 .hidden {
     display: none;

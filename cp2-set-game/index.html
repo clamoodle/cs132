@@ -8,13 +8,14 @@
 <html>
     <head>
         <title>Set World</title>
-        <link rel="stylesheet" href="index-styles.css" />
+        <link rel="stylesheet" href="index.css" />
+        <link rel="stylesheet" href="styles.css">
         <script src="utils.js"></script>
         <script defer src="welcome.js"></script>
     </head>
     <body>
         <!-- Landing page, where user selects whether yes/no music -->
-        <section id="sound-menu">
+        <section id="sound-menu" class="foreground">
             <h2>Would you like music?</h2>
             <div>
                 <button id="music-button">Yes Please</button>
@@ -23,26 +24,28 @@
         </section>
 
         <!-- Welcome page, where user chooses to log-in or create account -->
-        <section id="welcome-view" class="hidden">
+        <section id="welcome-view">
             <header>
-                <img id="sound-button" src="media/sound-button.png" />
+                <div id="menu-button" class="ui"></div>
+                <div id="music-toggle" class="ui muted"></div>
             </header>
             <main>
                 <!-- background sliding cards -->
-                <div class="sliding-cards"></div>
-                <div class="sliding-cards"></div>
+                <div class="sliding-layer"></div>
+                <div class="sliding-layer"></div>
+                <div class="sliding-layer"></div>
+                <div class="sliding-layer"></div>
                 <audio
                     id="welcome-song"
                     loop
                     src="media/genius-soft-adventurous-theme.wav"
                 ></audio>
+                <h1>Set World</h1>
                 <!-- foreground titles -->
                 <div class="foreground">
-                    <h1>Set World</h1>
-                    <div>
+                    
                         <button id="login-button">Log In</button>
                         <button id="create-button">Create New Character</button>
-                    </div>
                 </div>
             </main>
         </section>
@@ -54,7 +57,7 @@
                 <input type="text" required />
                 <label for="password">Password:</label>
                 <input type="password" required />
-                <button type="submit" value="submit">Start Game</button>
+                <button type="submit" value="submit" id="start-button">Start Game</button>
             </form>
         </section>
     </body>

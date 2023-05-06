@@ -23,6 +23,7 @@
         const bredImage = document.querySelector("img");
         if (bredState === 0) {
             bredImage.src = KNEAD_PIC;
+            bredImage.addEventListener('load', );
             BUTTON.textContent = "BAKE";
         } else if (bredState === 1) {
             bredImage.src = BRED_PIC;
