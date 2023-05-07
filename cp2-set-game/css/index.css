@@ -1,0 +1,45 @@
+/* animation and specific styles for #welcome-view, #sound-menu, and #login-view in index.html */
+
+#welcome-view .sliding-layer {
+    background-size: 300svw;
+    background-position: 0% 100%;
+}
+
+/* small faraway background mountains */
+#welcome-view .sliding-layer:first-child {
+    background-image: url(../media/hindground.png);
+    background-position: 62% 100%;  /* starting on my fav part of the drawing */
+    background-size: 310svw;
+    animation-duration: 170s;
+}
+
+/* mid-ground mountains */
+#welcome-view .sliding-layer:nth-child(2) {
+    background-image: url(../media/midground.png);
+    background-position: 10% 90%;
+    animation-duration: 100s;
+}
+
+/* snow-like thing in the background */
+#welcome-view .sliding-layer:nth-child(3) {
+    background-image: url(../media/snow-ish-thing.png);
+    animation-duration: 8s;
+}
+
+/* big closeup background cards */
+#welcome-view .sliding-layer:nth-child(4) {
+    background-image: url(../media/foreground-pixel-cards.png);
+    animation-duration: 50s;
+}
+
+#sound-menu {
+    text-align: center;
+    background-color: black;
+}
+
+#login-window {
+    background-color: rgba(235, 235, 235, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

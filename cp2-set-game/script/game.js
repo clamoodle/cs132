@@ -2,35 +2,30 @@
     "use strict";
     const JUMP_COOLDOWN_MS = 600; // time in MS, the time in game-styles.css to jump up
     const NUM_OBSTACLES = 10;
+
     // minimum and maximum time in MS between each obstacle
     const OBSTACLE_MIN_TIME_GAP_MS = 500;
     const OBSTACLE_MAX_TIME_GAP_MS = 3000;
 
     function init() {
         window.addEventListener("keydown", avatarControl);
-        generateMap();
+        addEventListenerToAll(".start-game-button", "click", openGame);
     }
 
     function avatarControl(e) {
         let avatar = qs("#avatar");
-
-        // console.log(AVATAR.style.animationPlayState);
-        // AVATAR.style.animationPlayState = "paused";
-        // console.log(AVATAR.style.animationPlayState);
         switch (e.keyCode) {
             // jumping case
             case 38:
             case 32: // up or space key respectively
+                // e.preventDefault();
                 jump(avatar);
         }
-        // AVATAR.style.animationPlayState = "running";
     }
 
     // Makes whoever the target is jump up and land down
     function jump(target) {
         if (!target.classList.contains("jump")) {
-            // target.style.animation = "jump 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) alternate infinite";
-            // target.style.animationIterationCount = "2";
             target.classList.add("jump");
         }
         setTimeout(() => {
@@ -48,22 +43,31 @@
                     Math.random() *
                         (OBSTACLE_MAX_TIME_GAP_MS - OBSTACLE_MIN_TIME_GAP_MS)
                 ) + OBSTACLE_MIN_TIME_GAP_MS;
-            console.log(randomTimeGapMS);
-            console.log(sumTimeGapSoFarMS);
             setTimeout(() => {
                 const newObstacle = document.createElement("div");
                 newObstacle.classList.add("obstacle", "sliding-layer");
-                qs("#game").appendChild(newObstacle);
-           }, randomTimeGapMS + sumTimeGapSoFarMS);
-           sumTimeGapSoFarMS += randomTimeGapMS; 
+                qs("#dino-game").appendChild(newObstacle);
+            }, randomTimeGapMS + sumTimeGapSoFarMS);
+            sumTimeGapSoFarMS += randomTimeGapMS;
         }
 
         // The final goal/finish line after the obstacles
         setTimeout(() => {
-            const goal = document.createElement("div");
+            const goal = gen("div");
             goal.classList.add("goal", "sliding-layer");
-            qs("#game").appendChild(goal);
-       }, sumTimeGapSoFarMS);
+            qs("#dino-game").appendChild(goal);
+        }, sumTimeGapSoFarMS);
+    }
+
+    function checkCollision() {
+        
+    }
+
+    function openGame() {
+        console.log("open game!");
+        hideAll("section");  // clears all page views in index.html
+        showView("#dino-game");
+        generateMap();
     }
 
     init();

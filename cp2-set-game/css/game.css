@@ -1,18 +1,18 @@
 /* animation for in-game sprites in game.html */
 
-body {
+/* body {
     background-image: url("media/big-bg-cards.png");
     background-size: 100%;
-}
+} */
 
 #avatar {
     width: 80px;
     height: 80px;
-    background-image: url("media/dog.png");
+    background-image: url(../media/dog.png);
     background-size: 100%;
     position: absolute;
     top: 75svh;
-    left: 15svw;
+    left: 30svw;
     /* ease out-in quadratic to imitate gravity */
     animation: walk 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) alternate infinite;
 }
@@ -20,7 +20,7 @@ body {
 div.obstacle {
     width: 120px;
     height: 65px;
-    background-image: url("media/foreground-pixel-cards.png");
+    background-image: url(../media/foreground-pixel-cards.png);
     background-position: bottom 0px left -252px;
     background-size: 1700px;
     position: absolute;

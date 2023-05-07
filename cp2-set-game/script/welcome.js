@@ -9,16 +9,11 @@
     const WELCOME_SONG_TIME_SHIFT = 0.34; // The amount of time at the end of the audio track to be overlapped
 
     function init() {
-        qs("#music-button").addEventListener("click", startGameWithMusic);
-        qs("#mute-button").addEventListener("click", startGame);
+        qs("#music-button").addEventListener("click", showWelcomeWithMusic);
+        qs("#mute-button").addEventListener("click", showWelcome);
         qs("#music-toggle").addEventListener("click", toggleMusic);
         qs("#login-button").addEventListener("click", showLogin);
-        qs("#create-button").addEventListener("click", () => {
-            window.location.href = "create-char.html";
-        });
-        qs("#start-button").addEventListener("click", () => {
-            window.location.href = "game.html";
-        })
+        qs("#create-button").addEventListener("click", showCreateChar);
         // For gap-less seamless looping of songs
         WELCOME_SONG.addEventListener(
             "timeupdate",
@@ -38,27 +33,26 @@
         }
     }
 
-    function startGame() {
-        // Hides sound menu
-        qs("#sound-menu").classList.add("hidden");
-        // Show title menu
-        qs("#welcome-view").classList.remove("hidden");
-        
+    function showWelcome() {
+        hideView("#sound-menu");
+        showView("#welcome-view");
     }
 
-    function startGameWithMusic() {
+    function showWelcomeWithMusic() {
         // Default music is muted upon page first loading
         toggleMusic();
-        startGame();
+        showWelcome();
     }
 
     function toggleMusic() {
         let musicToggle = qs("#music-toggle");
         if (musicToggle.classList.contains("muted")) {
+            // Plays song and changes button src to "on"
             musicToggle.classList.remove("muted");
             musicToggle.src = "media/music-on-button.png";
             WELCOME_SONG.play();
         } else {
+            // Pauses song and changes button src to "off"
             musicToggle.classList.add("muted");
             musicToggle.src = "media/music-off-button.png";
             WELCOME_SONG.pause();
@@ -66,8 +60,13 @@
     }
 
     function showLogin() {
-        qs("#login-view").classList.remove("hidden");
+        showView("#login-window");
         window.scrollBy(0, 1);
+    }
+
+    function showCreateChar() {
+        hideAll("section");  // clears all page views in index.html
+        showView("#char-creation-view");
     }
 
     init();
