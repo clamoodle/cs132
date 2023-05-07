@@ -13,12 +13,29 @@ body {
     position: absolute;
     top: 75svh;
     left: 15svw;
-    animation: walk 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) alternate infinite;
+    /* ease out-in quadratic to imitate gravity */
+    animation: walk 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) alternate infinite;
 }
 
-.jump {
+div.obstacle {
+    width: 120px;
+    height: 65px;
+    background-image: url("media/foreground-pixel-cards.png");
+    background-position: bottom 0px left -252px;
+    background-size: 1700px;
+    position: absolute;
+    top: 75svh;
+    margin-top: 10px; /* for bottom alignment with avatar */
+    left: auto;
+    right: -120px; /* so animation starts hiding behind the screen */
+    animation-duration: 15s;
+    animation-iteration-count: 1;
+}
+
+#avatar.jump {
     /* ease out-in quadratic to imitate gravity */
     animation: jump 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) alternate infinite;
+    animation-iteration-count: 2;
 }
 
 @keyframes jump {
@@ -37,4 +54,10 @@ body {
     100% {
         transform: translate3d(0, -10%, 0);
     }
+}
+
+.goal {
+    width: 90px;
+    height: 90px;
+    background-color: aqua;
 }

@@ -9,9 +9,17 @@
         <script defer src="game.js"></script>
     </head>
     <body>
-        <section>
+        <header>
+            <img id="menu-button" class="ui" src="media/menu-button.png" alt="menu button">
+            <img id="music-toggle" class="ui muted" src="media/music-off-button.png" alt="music toggle button">
+            <audio controls
+                    id="game-song"
+                    loop
+                    src="media/in-game-tense.wav"
+                ></audio> 
+        </header>
+        <section id="game">
             <div id="avatar"></div>
-            <div id="rock"></div>
         </section>
     </body>
 
