@@ -38,7 +38,7 @@ body {
 * {
     font-family: "Silkscreen", "Courier New", Courier, monospace;
     font-weight: 400;
-    color: rgb(45,108,133);
+    color: rgb(45, 108, 133);
 
     /* Hide scrollbar for IE, Edge and Firefox */
     -ms-overflow-style: none; /* IE and Edge */
@@ -71,24 +71,33 @@ header {
     z-index: 1;
 }
 
-header input[type="image"] {
+header * {
     margin-left: 10px;
 }
 
-h1 {
+h1,
+h3 {
     text-transform: uppercase;
     text-align: center;
-    letter-spacing: 2rem;
     font-family: "Foldit", cursive;
     margin: 0;
-    font-size: 35svh;
 
     /* Making the text have a gradient clipping mask fill */
     /* Source: https://cssgradient.io/blog/css-gradient-text/ */
-    background: -webkit-linear-gradient(white 10%, transparent);
+    background: -webkit-linear-gradient(rgb(255, 249, 249) 10%, transparent);
     -webkit-background-clip: text;
     background-clip: text;
+    color: transparent;
     -webkit-text-fill-color: transparent;
+}
+
+h1 {
+    font-size: 35svh;
+    letter-spacing: 2rem;
+}
+
+h2 {
+    color: aliceblue;
 }
 
 button,
@@ -96,8 +105,23 @@ button,
     color: blanchedalmond;
 }
 
-button {
+button,
+#music-toggle {
     cursor: pointer;
+}
+
+#music-toggle {
+    height: 100%;
+    width: 47.26px;
+    background-image: url(../media/music-on-button.png);
+    background-size: 47.26px;
+}
+
+#music-toggle.muted {
+    background-image: url(../media/music-off-button.png);
+}
+
+button {
     background-color: rgb(60, 134, 156);
     border: none;
     padding: 7px 10px;
@@ -129,6 +153,7 @@ section {
     top: 0;
 }
 
+/* Log-in window */
 form {
     padding: 5svh 10lvw 3svh;
     background-color: rgba(248, 248, 248, 0.8);
@@ -148,13 +173,6 @@ form label {
 
 /* animation made for images 3x screen width to loop */
 .sliding-layer {
-    position: absolute;
-    background-repeat: repeat-x;
-    top: 0;
-    left: 0;
-    width: 600svw;
-    height: 100svh;
-    z-index: 0;
     animation: slide linear infinite;
 }
 
@@ -165,6 +183,25 @@ form label {
     100% {
         transform: translate3d(-300svw, 0, 0);
     }
+}
+
+.bg.sliding-layer {
+    position: absolute;
+    background-repeat: repeat-x;
+    top: 0;
+    left: 0;
+    width: 600svw;
+    height: 100svh;
+    z-index: 0;
+    background-size: 300svw;
+    background-position: 0% 100%;
+}
+
+/* small faraway background mountains */
+.sliding-layer:first-child {
+    background-position: 55% 100%; /* starting on my fav part of the drawing */
+    background-size: 310svw;
+    animation-duration: 200s;
 }
 
 .hidden {

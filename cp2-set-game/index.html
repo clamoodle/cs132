@@ -23,13 +23,20 @@
                 src="media/menu-button.png"
                 alt="menu button"
             />
-            <input
-                type="image"
+            <!-- using div instead of img/input/button for music toggle for easier image source 
+                control with toggle across pages with different .js modules. Here, title is used 
+                instead of alt for accesibility -->
+            <div
                 id="music-toggle"
                 class="muted"
-                src="media/music-off-button.png"
-                alt="music toggle button"
-            />
+                title="music toggle button"
+            ></div>
+            <audio
+                id="music"
+                preload
+                loop
+                src="media/genius-soft-adventurous-theme.wav"
+            ></audio>
         </header>
         <!-- Each section here in <main></main> is a page view -->
         <main>
@@ -45,15 +52,11 @@
             <!-- Welcome page, where user chooses to log-in or create account -->
             <section id="welcome-view" class="hidden">
                 <!-- background sliding layers of lil' mountains -->
-                <div class="sliding-layer"></div>
-                <div class="sliding-layer"></div>
-                <div class="sliding-layer"></div>
-                <div class="sliding-layer"></div>
-                <audio
-                    id="welcome-song"
-                    loop
-                    src="media/genius-soft-adventurous-theme.wav"
-                ></audio>
+                <div class="bg sliding-layer"></div>
+                <div class="bg sliding-layer"></div>
+                <div class="bg sliding-layer"></div>
+                <div class="bg sliding-layer"></div>
+
                 <h1>Set World</h1>
                 <!-- foreground titles/buttons floating over mountains -->
                 <div class="foreground">
@@ -97,7 +100,16 @@
 
             <!-- The actual "dino" game view, clears everything else -->
             <section id="dino-game" class="hidden">
+                <!-- background sliding layers of lil' mountains -->
+                <div class="bg sliding-layer"></div>
+                <div class="bg sliding-layer"></div>
+                <div class="bg sliding-layer"></div>
+                <div class="bg sliding-layer"></div>
+
+                <!-- avatar and obstacles (which are to-be-added by game.js) -->
                 <div id="avatar"></div>
+                <h3 id="obstacle-count"></h3>
+                <div id="goal"></div>
             </section>
         </main>
     </body>

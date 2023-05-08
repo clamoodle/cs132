@@ -1,22 +1,15 @@
 /* animation and specific styles for #welcome-view, #sound-menu, and #login-view in index.html */
 
-#welcome-view .sliding-layer {
-    background-size: 300svw;
-    background-position: 0% 100%;
-}
 
 /* small faraway background mountains */
 #welcome-view .sliding-layer:first-child {
     background-image: url(../media/hindground.png);
-    background-position: 62% 100%;  /* starting on my fav part of the drawing */
-    background-size: 310svw;
-    animation-duration: 170s;
 }
 
 /* mid-ground mountains */
 #welcome-view .sliding-layer:nth-child(2) {
     background-image: url(../media/midground.png);
-    background-position: 10% 90%;
+    background-position: -5% 90%; /* starting on my fav part of the drawing */
     animation-duration: 100s;
 }
 

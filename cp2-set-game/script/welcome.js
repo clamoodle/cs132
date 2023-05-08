@@ -1,12 +1,12 @@
 /**
  * @author Pearl Chen
- * Welcome page event handlers/animations!
+ * Welcome page event handlers/animations, also handles the sound toggle/menu button in header
  */
 
 (function () {
     "use strict";
-    const WELCOME_SONG = qs("#welcome-song");
-    const WELCOME_SONG_TIME_SHIFT = 0.34; // The amount of time at the end of the audio track to be overlapped
+    const MUSIC = qs("#music");
+    const MUSIC_TIME_SHIFT = 0.34; // The amount of time at the end of the audio track to be overlapped
 
     function init() {
         qs("#music-button").addEventListener("click", showWelcomeWithMusic);
@@ -15,21 +15,14 @@
         qs("#login-button").addEventListener("click", showLogin);
         qs("#create-button").addEventListener("click", showCreateChar);
         // For gap-less seamless looping of songs
-        WELCOME_SONG.addEventListener(
-            "timeupdate",
-            shiftMusic,
-            WELCOME_SONG_TIME_SHIFT
-        );
+        // MUSIC.addEventListener("timeupdate", shiftMusic, MUSIC_TIME_SHIFT);
     }
 
-    /**
-     * For gap-less seamless looping between each loop of a song, shifts the next play-back forward
-     * @param gapTime time in gap in seconds to be made up
-     */
     function shiftMusic() {
-        if (this.currentTime > this.duration - this.gapTime) {
+        gapTime = MUSIC_TIME_SHIFT;
+        if (this.currentTime > this.duration - gapTime) {
             this.currentTime = 0;
-            this.play();
+            MUSIC.play();
         }
     }
 
@@ -47,15 +40,13 @@
     function toggleMusic() {
         let musicToggle = qs("#music-toggle");
         if (musicToggle.classList.contains("muted")) {
-            // Plays song and changes button src to "on"
+            // Pauses song and changes button background image to "off" with class change
             musicToggle.classList.remove("muted");
-            musicToggle.src = "media/music-on-button.png";
-            WELCOME_SONG.play();
+            MUSIC.play();
         } else {
-            // Pauses song and changes button src to "off"
+            // Plays song and changes button background image to "on" with class change
             musicToggle.classList.add("muted");
-            musicToggle.src = "media/music-off-button.png";
-            WELCOME_SONG.pause();
+            MUSIC.pause();
         }
     }
 
@@ -65,7 +56,7 @@
     }
 
     function showCreateChar() {
-        hideAll("section");  // clears all page views in index.html
+        hideAll("section"); // clears all page views in index.html
         showView("#char-creation-view");
     }
 

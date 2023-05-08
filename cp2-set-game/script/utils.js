@@ -60,7 +60,7 @@ function hideView(selector) {
  * @param {string} selector - CSS query selector elements to be hidden
  */
 function hideAll(selector) {
-    qsa(selector).forEach(target => {
+    qsa(selector).forEach((target) => {
         target.classList.add("hidden");
     });
 }
@@ -72,7 +72,7 @@ function hideAll(selector) {
  * @param {function} callback - callback function to be added to all elements
  */
 function addEventListenerToAll(selector, type, callback) {
-    qsa(selector).forEach(target => {
+    qsa(selector).forEach((target) => {
         target.addEventListener(type, callback);
     });
 }
