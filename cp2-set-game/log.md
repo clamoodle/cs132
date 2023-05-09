@@ -30,6 +30,10 @@ implemented:
     - changeMusic() function, now plays different song when game end
     - menu button construction message, fixed bug of welcome song restarting when dismissing menu
     - twinkling sparkles animation around goal
+    - restart game obstacle count reset
+    - space bar to start game/blinking messages before game starts
+    - fixed bugs in timer, etc, in restarting game after going back to welcome screen
+    - factored out keyframes.css
 
 todo:
     x make sound buttons clickable during popups/ but not during #sound-menu (z-index refactoring)

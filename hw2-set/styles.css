@@ -71,6 +71,12 @@ h2 {
     margin-bottom: 5px;
 }
 
+.card p {
+    font-weight: bold;
+    font-size: 16pt;
+    text-align: center;
+}
+
 .card > img {
     height: 85%;
 }

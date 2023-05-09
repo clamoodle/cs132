@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <!--
   Author: Pearl Chen
-  Date: Apr 27, 2023
-  HTML for the landing welcome/login page of Set World, a game where you can play variations of the
-  Set game and buy stuff as a cute lil' pixel guy! (Yes, Set Penguin.)
+  Date: May 9, 2023
+  HTML for the landing welcome/login page of Set World, a game where I hopefully will eventually
+  make it so that players can play variations of the Set game and buy stuff as a cute lil' pixel
+  guy! (Yes, Set Penguin.)
+  So far right now it has a welcome page which leads to a version of the chrome dino game
 -->
+
 <html>
     <head>
         <title>Set World</title>
         <link rel="stylesheet" href="css/styles.css" />
+        <link rel="stylesheet" href="css/keyframes.css" />
         <link rel="stylesheet" href="css/index.css" />
         <link rel="stylesheet" href="css/game.css" />
         <script src="script/utils.js"></script>
@@ -54,12 +58,12 @@
             <!-- Log-in form, overlays the welcome page -->
             <section id="login-window" class="hidden foreground">
                 <form>
-                    <label for="username">
+                    <label>
                         Username:
                         <input type="text" required />
                     </label>
 
-                    <label for="password">
+                    <label>
                         Password:
                         <input type="password" required />
                     </label>
@@ -81,6 +85,15 @@
                 <div class="bg sliding-layer"></div>
                 <div class="bg sliding-layer"></div>
                 <div class="bg sliding-layer"></div>
+
+                <section id="game-start-msg">
+                    <h4>Press space to start jumping!</h4>
+                    <p>It's so much easier if your viewport is wider than tall</p>
+                    <p>
+                        I'm working on incorporating a set game up here to help clear obstacles and
+                        stuff hence the name of the game, but it's taking a lil while :')
+                    </p>
+                </section>
 
                 <!-- avatar and obstacles (which are to-be-added by game.js) -->
                 <div id="avatar"></div>

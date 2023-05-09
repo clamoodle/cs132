@@ -1,4 +1,11 @@
-/* animation and specific styles for #welcome-view, #sound-menu, and #login-view in index.html */
+/*
+  NAME: Pearl Chen
+  CS 132 Spring 2023
+  DATE: May 9, 2023
+
+  Animation and specific styles for #welcome-view, #sound-menu, and #login-view in index.html
+*/
+
 #welcome-view {
     background-image: linear-gradient(rgb(21 112 116), rgb(198 221 255), rgb(235, 235, 235));
 }
@@ -28,6 +35,5 @@
 }
 
 #sound-menu {
-    text-align: center;
     background-color: black;
 }

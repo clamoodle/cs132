@@ -1,6 +1,7 @@
 /**
- * CS 132
- * Provided global DOM accessor aliases, and also helper functions for generic JS tasks
+ * @author Pearl Chen
+ * CS 132 Provided global DOM accessor aliases, and also some helper functions for generic JS tasks
+ * I made
  */
 
 /**
