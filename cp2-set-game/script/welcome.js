@@ -13,7 +13,7 @@
         qs("#mute-button").addEventListener("click", showWelcome);
         qs("#music-toggle").addEventListener("click", toggleMusic);
         qs("#login-button").addEventListener("click", showLogin);
-        qs("#create-button").addEventListener("click", showCreateChar);
+        qs("#menu-button").addEventListener("click", showMenu);
         // For gap-less seamless looping of songs
         // MUSIC.addEventListener("timeupdate", shiftMusic, MUSIC_TIME_SHIFT);
     }
@@ -27,7 +27,7 @@
     }
 
     function showWelcome() {
-        hideView("#sound-menu");
+        hideAll("section"); // clears all page views in index.html
         showView("#welcome-view");
     }
 
@@ -55,10 +55,12 @@
         window.scrollBy(0, 1);
     }
 
-    function showCreateChar() {
-        hideAll("section"); // clears all page views in index.html
-        showView("#char-creation-view");
+    function showMenu() {
+        qs("#popup-msg").textContent =
+            "Menu still underconstruction :( Hopefully more features coming soon!";
+        qs("#popup-window").classList.remove("hidden");
     }
+
 
     init();
 })();

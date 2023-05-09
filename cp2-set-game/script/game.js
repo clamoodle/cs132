@@ -1,11 +1,21 @@
+/**
+ * Handles music and theme changes across pages, and all in-game actions of the dino-game
+ */
 (function () {
     "use strict";
     const JUMP_COOLDOWN_MS = 700; // time in MS, double the time in game-styles.css to jump up
     const COLLISION_LENIENCY_PX = 20;
-    const NUM_OBSTACLES = 1;
-    const BUFFER_TIME_BEFORE_GAME_ENDS_MS = 2000 * NUM_OBSTACLES;
+    const NUM_OBSTACLES = 11;
+    const BUFFER_TIME_BEFORE_GAME_ENDS_MS = 2000;
+
     const IMG_PATH = "media/";
     const OBSTALCE_IMGS = ["diamond-obstacle.png", "oval-obstacle.png", "squiggle-obstacle.png"];
+
+    const MUSIC_PATH = "media/";
+    const WELCOME_SONG = "genius-soft-adventurous-theme.wav";
+    const IN_GAME_SONG = "in-game-tense.wav";
+    const GAME_END_SONG = "silly-tune.wav";
+    const CREATE_SONG = "calm-genius-silly-theme.wav";
 
     // frame rate of browser CSS animation, <=60 according to mdn:
     // https://developer.mozilla.org/en-US/docs/Web/Performance/Animation_performance_and_frame_rate
@@ -16,9 +26,22 @@
     const OBSTACLE_MAX_TIME_GAP_MS = 7000;
 
     let obstacleCount = NUM_OBSTACLES;
+    let gameOver = false;
     let timerId = null;
 
     function init() {
+        qs("#create-button").addEventListener("click", showCreateChar);
+        addEventListenerToAll(".start-game-button", "click", initGame);
+        addEventListenerToAll(".back-button", "click", showWelcome);
+    }
+
+    function showCreateChar() {
+        hideAll("section"); // clears all page views in index.html
+        showView("#char-creation-view");
+        changeMusic(CREATE_SONG);
+    }
+
+    function initGame() {
         window.addEventListener("keydown", avatarControl);
         timerId = setInterval(handleCollision, 1000 / FRAME_RATE_FPS);
 
@@ -60,20 +83,37 @@
      * @returns {boolean} - whether the avatar and the target are colliding
      */
     function isColliding(avatar, target) {
+        if (!target) {
+            return false;
+        }
+
         // Getting avatar left, width, and bottom
         // Source: https://stackoverflow.com/questions/2440377/javascript-collision-detection
         let avatarRect = avatar.getBoundingClientRect();
         // Getting obstacle left and top coordinates
         let obstacleRect = target.getBoundingClientRect();
-        
+
         // Note all coordinates here are x, y based on the top-left of window being the origin
         if (
             obstacleRect.left <= avatarRect.left + avatarRect.width / 2 &&
-            obstacleRect.left >= avatarRect.left &&  // between midpoint and left of avatar
+            obstacleRect.left >= avatarRect.left && // between midpoint and left of avatar
             avatarRect.bottom > obstacleRect.top + COLLISION_LENIENCY_PX
         ) {
             return true;
         }
+    }
+
+    /**
+     * Handles the event of game over
+     * @param {boolean} won - whether the player cleared the game
+     */
+    function didPlayerWin(won) {
+        gameOver = true;
+        changeMusic(GAME_END_SONG);
+        qs("#popup-msg").textContent = won
+            ? "You won! Yayayy!"
+            : "Game over! Better luck next time :,(";
+        qs("#popup-window").classList.remove("hidden");
     }
 
     /**
@@ -87,9 +127,9 @@
         // Checking collisions for each obstacle
         qsa(".obstacle").forEach((element) => {
             if (isColliding(avatar, element)) {
-                console.log("collide!");
-                // pauseAllSlidingAnimation();
-                // clearInterval(timerId); 
+                pauseAllSlidingAnimation();
+                clearInterval(timerId);
+                didPlayerWin(false);
                 // Collision handling
                 // todo: invincible function: flash avatar, no collisions
                 //       also gets pushed back
@@ -99,9 +139,9 @@
 
         // Wins game if collides with goal!
         if (isColliding(avatar, qs(".goal"))) {
-            console.log("collide")
             pauseAllSlidingAnimation();
-            clearInterval(timerId);  // Stop the collision checker timer
+            clearInterval(timerId); // Stop the collision checker timer
+            didPlayerWin(true);
         }
     }
 
@@ -119,20 +159,62 @@
         qs("#avatar").style.animationPlayState = avatarState;
     }
 
-    function changeHeaderColor() {
-        qs("#menu-button").src = "media/red-menu-button.png";
-        qs("#music-toggle").classList.add("red");
-    }
-
-    function changeMusic() {
-        let music = qs("#music");
-        music.src = "media/in-game-tense.wav";
-        if (!qs("#music-toggle").classList.contains("muted")) {
-            music.play();
+    /**
+     * Changes the color of header icons between views
+     * @param {boolean} inGame - whether we want red in-game header colors or not
+     */
+    function changeHeaderColor(inGame) {
+        if (inGame) {
+            qs("#menu-button").src = IMG_PATH + "red-menu-button.png";
+            qs("#music-toggle").classList.add("red");
+        } else {
+            qs("#menu-button").src = IMG_PATH + "menu-button.png";
+            qs("#music-toggle").classList.remove("red");
         }
     }
 
+    /**
+     * Changes the background track
+     * @param {string} song - the pile path to the audio file we wish to play
+     */
+    function changeMusic(song) {
+        let music = qs("#music");
+
+        // Checking for not playing the same track again if we're on the same page
+        // Slicing for getting rid of "index.html?"
+        if (music.src === window.location.href.slice(0, -11) + MUSIC_PATH + song) {
+            return;
+        }
+
+        music.src = MUSIC_PATH + song;
+        // console.log(music.src);
+        if (!qs("#music-toggle").classList.contains("muted")) {
+            music.play();
+        }
+
+        // silly-tune.wav is a bit loud :,D
+        if (song === "silly-tune.wav") {
+            music.volume = 0.5;
+        } else {
+            music.volume = 1;
+        }
+    }
+
+    function showWelcome() {
+        hideAll("section"); // clears all page views in index.html
+        showView("#welcome-view");
+
+        changeHeaderColor(false);
+        changeMusic(WELCOME_SONG);
+        pauseAllSlidingAnimation(false, false);
+    }
+
+    // Generating obstacles sliding across the screen
     function generateObstacle() {
+        if (gameOver || obstacleCount === 0) {
+            return;
+        }
+
         // Generate new obstacle img node with random src
         let randomIdx = Math.floor(Math.random() * OBSTALCE_IMGS.length);
         const newObstacle = gen("img");
@@ -141,49 +223,49 @@
         newObstacle.alt = OBSTALCE_IMGS[randomIdx].replace("-", " ").slice(0, -4);
         qs("#dino-game").appendChild(newObstacle);
 
-        newObstacle.addEventListener("animationend", () => {
-            this.parentNode.removeChild(this);  // we don't need them once outside of the viewport
-        });
-
         // Update obstacle count
         obstacleCount--;
         qs("#obstacle-count").textContent = "Obstacles left: " + obstacleCount;
+
+        // Remove them once outside of the viewport
+        if (newObstacle) {
+            // if statement to prevent null error after game ends
+            newObstacle.addEventListener("animationend", () => {
+                this.remove();
+            });
+        }
     }
 
+    /**
+     * Generate obstacles with random time intervals between them and the goal at the end
+     * Recursive to generate obstacles one after another
+     */
     function generateMap() {
-        let sumTimeGapSoFarMS = 0;
-        let randomTimeGapMS = 0;
+        generateObstacle();
 
-        // Generating obstacles sliding across the screen
-        for (let i = 0; i < NUM_OBSTACLES; i++) {
-            setTimeout(generateObstacle, randomTimeGapMS + sumTimeGapSoFarMS);
+        // Genearate random time gap
+        let obstacleTimeGapMS =
+            Math.floor(Math.random() * (OBSTACLE_MAX_TIME_GAP_MS - OBSTACLE_MIN_TIME_GAP_MS)) +
+            OBSTACLE_MIN_TIME_GAP_MS;
 
-            // Update random time gap
-            randomTimeGapMS =
-                Math.floor(Math.random() * (OBSTACLE_MAX_TIME_GAP_MS - OBSTACLE_MIN_TIME_GAP_MS)) +
-                OBSTACLE_MIN_TIME_GAP_MS;
-            sumTimeGapSoFarMS += randomTimeGapMS;
+        // Recursion
+        if (obstacleCount > 1) {
+            setTimeout(generateMap, obstacleTimeGapMS);
+        } else if (!gameOver) {
+            // Start sliding the final goal/finish line after the obstacles
+            setTimeout(() => {
+                qs(".goal").classList.add("sliding-layer");
+            }, BUFFER_TIME_BEFORE_GAME_ENDS_MS);
         }
-
-        // The final goal/finish line after the obstacles
-        setTimeout(() => {
-            const goal = gen("img");
-            goal.src = IMG_PATH + "goal.png";
-            goal.classList.add("goal", "sliding-layer");
-            goal.alt = "goal";
-            qs("#dino-game").appendChild(goal);
-            
-        }, sumTimeGapSoFarMS + BUFFER_TIME_BEFORE_GAME_ENDS_MS);
     }
 
     function openGame() {
         hideAll("section"); // clears all page views in index.html
-        changeMusic();
-        changeHeaderColor();
+        changeMusic(IN_GAME_SONG);
+        changeHeaderColor(true);
         showView("#dino-game");
         generateMap();
     }
 
-    addEventListenerToAll(".start-game-button", "click", init);
     init();
 })();

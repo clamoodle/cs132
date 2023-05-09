@@ -17,26 +17,12 @@
     </head>
     <body>
         <header>
-            <input
-                type="image"
-                id="menu-button"
-                src="media/menu-button.png"
-                alt="menu button"
-            />
+            <input type="image" id="menu-button" src="media/menu-button.png" alt="menu button" />
             <!-- using div instead of img/input/button for music toggle for easier image source 
                 control with toggle across pages with different .js modules. Here, title is used 
                 instead of alt for accesibility -->
-            <div
-                id="music-toggle"
-                class="muted"
-                title="music toggle button"
-            ></div>
-            <audio
-                id="music"
-                preload
-                loop
-                src="media/genius-soft-adventurous-theme.wav"
-            ></audio>
+            <div id="music-toggle" class="muted" title="music toggle button"></div>
+            <audio id="music" preload loop src="media/genius-soft-adventurous-theme.wav"></audio>
         </header>
         <!-- Each section here in <main></main> is a page view -->
         <main>
@@ -77,25 +63,15 @@
                         Password:
                         <input type="password" required />
                     </label>
-                    <button type="button" class="start-game-button">
-                        Start Game
-                    </button>
+                    <button type="button" class="start-game-button">Start Game</button>
                 </form>
             </section>
 
             <!-- Character selection / creation view, leads to the game view afterwards -->
             <section id="char-creation-view" class="hidden">
                 Oop! Still under construction!
-                <a href="index.html">back</a>
-                <audio
-                    id="welcome-song"
-                    controls
-                    loop
-                    src="media/calm-genius-silly-theme.wav"
-                ></audio>
-                <button type="button" class="start-game-button">
-                    Start Game
-                </button>
+                <button type="button" class="back-button">back</button>
+                <button type="button" class="start-game-button">Start Game</button>
             </section>
 
             <!-- The actual "dino" game view, clears everything else -->
@@ -109,7 +85,21 @@
                 <!-- avatar and obstacles (which are to-be-added by game.js) -->
                 <div id="avatar"></div>
                 <h3 id="obstacle-count"></h3>
-                <div id="goal"></div>
+
+                <!-- the goal div will start sliding towards avatar once obstacles are all cleared -->
+                <div class="goal">
+                    <img src="media/goal.png" alt="goal" />
+                    <img src="media/sparkle-1.png" alt="sparkles" />
+                    <img src="media/sparkle-2.png" alt="more sparkles" />
+                </div>
+            </section>
+
+            <!-- Popup message, includes game end message -->
+            <section id="popup-window" class="foreground">
+                <form>
+                    <label id="popup-msg">Game over!</label>
+                    <button type="button" class="back-button">back</button>
+                </form>
             </section>
         </main>
     </body>
