@@ -15,6 +15,10 @@
             href="https://pngimg.com/uploads/dough/dough_PNG4.png"
         />
         <link rel="stylesheet" href="style.css" />
+        <!-- Source: Rellax by Dixon and Moe on Github -->
+        <script src="https://cdn.jsdelivr.net/gh/dixonandmoe/rellax@master/rellax.min.js"></script>
+        <script defer src="tabs.js"></script>
+        <script defer src="rellax.js"></script>
     </head>
     <body>
         <header>
@@ -42,30 +46,21 @@
                 <div class="rellax" data-rellax-speed="-2">
                     <h1>&amp;After</h1>
                 </div>
-
-                <!-- Source: Rellax by Dixon and Moe on Github -->
-                <script src="https://cdn.jsdelivr.net/gh/dixonandmoe/rellax@master/rellax.min.js"></script>
-                <script>
-                    // Accepts any class name
-                    var rellax = new Rellax(".rellax");
-                </script>
             </section>
 
             <!-- Filler text section -->
             <section>
                 <p>
-                    Try clicky click the "tabs" below with more clicky links!
-                    Choose "Witness" or "NECESSITIES" to witness the craft of
-                    before, during, and after! You will be directed back home
-                    after your journey. Here's another line to make this block
-                    of text look more aesthetic.
+                    Try clicky click the "tabs" below with more clicky links! Choose "Witness" or
+                    "NECESSITIES" to witness the craft of before, during, and after! You will be
+                    directed back home after your journey. Here's another line to make this block of
+                    text look more aesthetic.
                 </p>
             </section>
 
             <!-- Linkey tabs section -->
             <section>
                 <!-- BUTTONS FOR NAV TABS -->
-                <script src="tabs.js"></script>
                 <div class="bar">
                     <button onclick="openTab('saw')">WITNESS</button>
                     <button onclick="openTab('need')">NECESSITIES</button>
@@ -73,15 +68,11 @@
 
                 <!-- TAB CONTENTS -->
                 <div id="saw" class="tab">
-                    <h3>
-                        NOW, <br /><a href="wood.html">YOU KNOW WHAT I SAW?</a>
-                    </h3>
+                    <h3>NOW, <br /><a href="wood.html">YOU KNOW WHAT I SAW?</a></h3>
                 </div>
 
                 <div id="need" class="tab" style="display: none">
-                    <h3>
-                        THEN, <br /><a href="bred.html">WHAT DO YOU NEED?</a>
-                    </h3>
+                    <h3>THEN, <br /><a href="bred.html">WHAT DO YOU NEED?</a></h3>
                 </div>
             </section>
         </main>
