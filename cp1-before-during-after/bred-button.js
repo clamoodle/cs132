@@ -1,6 +1,10 @@
-"use strict";
+/**
+ * Handles all bread switching in bred.html
+ */
 
 (function () {
+    "use strict";
+
     // Source: Bread Alone Bakery
     const BRED_PIC =
         "https://images.squarespace-cdn.com/content/v1/54ff1158e4b0a76e3a904b6c/1435689618959-LB3VMMDWEIY4DCRD69BT/image-asset.png";
@@ -15,10 +19,16 @@
 
     let bredState = 0;
 
+    /**
+     * Adds all event listeners
+     */
     function init() {
         BUTTON.addEventListener("click", switchBread);
     }
 
+    /**
+     * Changes the image of the bread displayed
+     */
     function switchBread() {
         const bredImage = document.querySelector("img");
         if (bredState === 0) {
