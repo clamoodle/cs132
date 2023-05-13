@@ -12,11 +12,12 @@
     const ATTRIBUTES = [STYLES, SHAPES, COLORS, COUNTS];
     const NUM_CARDS_IN_BOARD = 12;
     const NUM_CARDS_IN_BOARD_EASY = 9;
+    const PENALTY_S = 15;
 
     const IMG_PATH = "imgs/";
 
     let timerId = null;
-    let timeRemainingS;
+    let secondsRemaining;
 
     /**
      * Initializes all eventlisteners to be added to elements in the page
@@ -50,6 +51,11 @@
         qs("#refresh-btn").disabled = false;
         toggleView();
 
+        // Remove previous cards if any
+        while (qs("#board .card")) {
+            qs("#board").removeChild(qs("#board .card"));
+        }
+
         // Generate cards on the board
         for (let i = 0; i < numCards; i++) {
             let card = generateUniqueCard(isEasy);
@@ -58,9 +64,16 @@
         startTimer();
     }
 
+    /**
+     * Changes all the current cards on the board. Gives a timer penalty if there is a set there.
+     */
     function refreshBoard() {
         let isEasy = qs("input[name='diff'][value='easy']").checked;
-        let numCards = isEasy ? NUM_CARDS_IN_BOARD_EASY : NUM_CARDS_IN_BOARD;
+
+        // Timer penalty if there's a set
+        if (ExistSetOnBoard) {
+            applyPenalty();
+        }
 
         // Re-generate cards on the board
         qsa(".card:not(.hide_imgs)").forEach((card) => {
@@ -86,28 +99,25 @@
         qs("#refresh-btn").disabled = true;
 
         clearInterval(timerId);
+        timerId = null;
     }
 
     /**
      * Starts the timer for a new game. No return value.
      */
     function startTimer() {
-        timeRemainingS = qs("select").value;
+        secondsRemaining = parseInt(qs("select").value);
+        displayTime();
         timerId = setInterval(advanceTimer, 1000);
     }
 
     /**
-     * Updates the game timer (module global and #time shown on page) by 1 second. No return value.
+     * Displays timer view for MM:SS in the timer text content
      */
-    function advanceTimer() {
-        // Check time remaining is not negative (checked after displaying text)
-        if (timeRemainingS === 0) {
-            endGame();
-        }
-
+    function displayTime() {
         // Calculating timer view for MM:SS
-        let minutes = Math.floor(timeRemainingS / 60);
-        let seconds = timeRemainingS % 60;
+        let minutes = Math.floor(secondsRemaining / 60);
+        let seconds = secondsRemaining % 60;
 
         // Make <= 2 digits
         let minPrefix = minutes < 10 ? "0" : "";
@@ -115,10 +125,22 @@
         minutes = minPrefix + minutes;
         seconds = secPrefix + seconds;
 
+        // Display time
         qs("#time").textContent = minutes + ":" + seconds;
+    }
 
+    /**
+     * Updates the game timer (module global and #time shown on page) by 1 second. No return value.
+     */
+    function advanceTimer() {
         // Update module global variable
-        timeRemainingS--;
+        secondsRemaining--;
+        displayTime();
+
+        // Check time remaining is not negative (checked immediately after displaying text)
+        if (secondsRemaining === 0) {
+            endGame();
+        }
     }
 
     /**
@@ -160,7 +182,7 @@
         let attributes;
         let cardId;
 
-        // keep generating until there's no card in #board with the same id
+        // Keep generating until there's no card in #board with the same id
         let duplicates = true;
         while (duplicates) {
             attributes = generateRandomAttributes(isEasy);
@@ -171,15 +193,15 @@
         let count = attributes[3];
         let imgSrc = IMG_PATH + attributes.slice(0, 3).join("-") + ".png";
         let card = gen("div");
-        card.classList.add("card"); // for styling
+        card.classList.add("card"); // For styling
         card.setAttribute("id", cardId);
         card.addEventListener("click", cardSelected);
 
-        // appending the child images COUNT times
+        // Appending the child images COUNT times
         for (let i = 0; i < count; i++) {
             let image = gen("img");
             image.src = imgSrc;
-            image.alt = attributes.join(" ");
+            image.alt = cardId;
             card.appendChild(image);
         }
 
@@ -228,9 +250,12 @@
     function handleSelectedCards(isSet, selectedCards) {
         let isEasy = qs("input[name='diff'][value='easy']").checked;
 
-        let message = isSet ? "SET!" : "Not a Set:(";
+        let message = isSet ? "SET!" : "Not a Set :(";
 
         selectedCards.forEach((card) => {
+            // Unselecting card
+            card.classList.remove("selected");
+
             // Hide images in card
             card.classList.add("hide-imgs");
 
@@ -239,14 +264,13 @@
             messageNode.textContent = message;
             card.appendChild(messageNode);
 
-            // Unselecting after 1 second and replacing with a new card if there was a set
+            // After 1 second returning to card or replacing with a new card if there was a set
             setTimeout(() => {
-                card.classList.remove("selected");
                 if (isSet) {
                     card.replaceWith(generateUniqueCard(isEasy));
                 } else {
                     card.classList.remove("hide-imgs");
-                    messageNode.classList.add("hidden");
+                    messageNode.remove();
                 }
             }, 1000);
         });
@@ -268,15 +292,43 @@
                 qs("#set-count").textContent++;
             } else {
                 handleSelectedCards(false, selectedCards);
-
-                // 15 second deduction penalty
-                if (timeRemainingS >= 15) {
-                    timeRemainingS -= 15;
-                } else {
-                    timeRemainingS = 0;
-                }
+                applyPenalty();
             }
         }
     }
+
+    /**
+     * Applies the timer penalty by deducting seconds from time remaining until game ends.
+     */
+    function applyPenalty() {
+        if (secondsRemaining > PENALTY_S) {
+            secondsRemaining -= PENALTY_S;
+        } else {
+            secondsRemaining = 0;
+            endGame();
+        }
+        displayTime();
+    }
+
+    /**
+     * Checks whether there exists sets on the board
+     * @returns {boolean} whether there are sets on the board
+     */
+    function ExistSetOnBoard() {
+        let cards = qsa("#board .card");
+
+        for (let i = 0; i < cards.length - 2; i++) {
+            for (let j = i + 1; j < cards.length - 1; j++) {
+                for (let k = j + 1; k < cards.length; k++) {
+                    let selectedCards = [cards[i], cards[j], cards[k]];
+                    if (isASet(selectedCards)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     init();
 })();

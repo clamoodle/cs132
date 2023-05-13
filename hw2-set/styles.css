@@ -8,7 +8,8 @@
 body,
 button,
 select,
-input {
+input,
+.card p {
     text-align: center;
     font-size: 12pt;
     font-family: Helvetica, Verdana, sans-serif;
@@ -26,9 +27,13 @@ select {
     border: 2pt solid black;
 }
 
+h2,
+.card p {
+    font-size: 16pt;
+}
+
 h2 {
     text-decoration: underline;
-    font-size: 16pt;
 }
 
 #start-btn {
@@ -37,19 +42,23 @@ h2 {
     margin-bottom: 20px;
 }
 
-#menu-view > article, #details-bar {
+#menu-view > article,
+#details-bar {
     background-color: #6f77ed;
     border-radius: 0.35em;
     border: 5pt solid black;
     color: white;
 }
 
-#details-bar, .card, #board {
+#details-bar,
+.card,
+#board {
     display: flex;
     justify-content: space-evenly;
 }
 
-#details-bar, .card {
+#details-bar,
+.card {
     align-items: center;
 }
 
@@ -59,7 +68,8 @@ h2 {
     font-size: 14pt;
 }
 
-.hidden, .hide-imgs img {
+.hidden,
+.hide-imgs img {
     display: none;
 }
 
@@ -75,8 +85,6 @@ h2 {
 
 .card p {
     font-weight: bold;
-    font-size: 16pt;
-    text-align: center;
 }
 
 .card > img {
