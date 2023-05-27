@@ -1,16 +1,18 @@
 /*
- * TODO: Add student information and brief program overview.
+ * @author Pearl Chen
+ * CS132 Spring 2023
+ *
+ * Fetches Spotify API to complete functions of the game in index.html
  */
-(function() {
+(function () {
     "use strict";
 
     const BASE_URL = "https://api.spotify.com/v1/";
-    const SEARCH_EP = BASE_URL + "search?";  // Part 2 EP
+    const SEARCH_EP = BASE_URL + "search?"; // Part 2 EP
     const ARTIST_EP = BASE_URL + "artists/"; // Part 3 EP
 
-    // Part 1a TODO: Get your own client id and secret from Spotify
-    const CLIENT_ID = "";
-    const CLIENT_SECRET = "";
+    const CLIENT_ID = "0041dd3e94074ccb8e15e3a9f330431e";
+    const CLIENT_SECRET = "d6b6839d03a64436b520b263c0860da7";
 
     const MAX_SEARCH_RESULTS = 5;
 
@@ -27,7 +29,7 @@
      * @returns none
      */
     async function init() {
-        // Part 1c TODO: Set the access token with your getAccessToken() function
+        getAccessToken();
 
         const searchBar = qs("input");
         searchBar.addEventListener("change", () => {
@@ -54,21 +56,27 @@
      * @returns none
      */
     async function getAccessToken() {
-        // let resp = await fetch("https://accounts.spotify.com/api/token", {
-        //     method: "POST",
-        //     headers: {
-        //       Authorization: "Basic " + btoa(CLIENT_ID + ":" + CLIENT_SECRET),
-        //       "Content-Type": "application/x-www-form-urlencoded"
-        //     },
-        //     body: "grant_type=client_credentials"
-        // });
-        // Part 1b TODO: Uncomment and finish above fetch call to update accessToken.
+        try {
+            let resp = await fetch("https://accounts.spotify.com/api/token", {
+                method: "POST",
+                headers: {
+                    Authorization: "Basic " + btoa(CLIENT_ID + ":" + CLIENT_SECRET),
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "grant_type=client_credentials",
+            });
+            resp = checkStatus(resp);
+            const data = await resp.json();
+            accessToken = data.access_token;
+        } catch (err) {
+            handleError(err);
+        }
     }
 
     /**
      * Uses the 'search' Spotify API endpoint:
      * https://developer.spotify.com/documentation/web-api/reference/#/operations/search
-     * 
+     *
      * Fetches artists from the Spotify API using the given search query
      * string and populates artist results (use populateArtistResults). Displays a
      * useful error message if an error occurs during the request.
@@ -76,11 +84,26 @@
      * @returns none
      */
     async function fetchArtists(name) {
-        // Part 2a: TODO
-        // Reminders: 
-        // - Don't forget to use encodeURIComponent on the name before building
-        //   your fetch string!
-        // - Set fetch header options with { Authorization: Bearer _accessToken_ }
+        try {
+            let resp = await fetch(
+                SEARCH_EP +
+                    new URLSearchParams({
+                        type: "artist",
+                        limit: MAX_SEARCH_RESULTS,
+                        q: name,
+                    }),
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+            resp = checkStatus(resp);
+            const data = await resp.json();
+            populateArtistResults(data);
+        } catch (err) {
+            handleError(err);
+        }
     }
 
     /**
@@ -92,13 +115,32 @@
      */
     function populateArtistResults(artistsData) {
         const noArtistErr = "The search didn't return any artists on Spotify; please try again.";
-        // Part 2b: TODO
+
+        try {
+            // Clear #search-results area
+            qs("#search-results").innerHTML = "";
+
+            // Check no results returned
+            const artists = artistsData.artists.items;
+            if (artists.length === 0) {
+                throw Error(noArtistErr);
+            }
+
+            // Populates with new info
+            qs("#message-area").classList.add("hidden");
+            artists.forEach((artist) => {
+                const card = genArtistCard(artist);
+                qs("#search-results").appendChild(card);
+            });
+        } catch (err) {
+            handleError(err.message);
+        }
     }
 
     /**
      * Takes info about an artist and returns an article "card"
      * with relevant info (h3 and img).
-     * @param {Object} artistInfo - an object as described here: 
+     * @param {Object} artistInfo - an object as described here:
      *   https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-album
      * @return {DOMElement} The element representing an artist's card. The format
      * of the returned article is the following:
@@ -108,19 +150,38 @@
      * </article>
      * For example,
      * <article>
-     *   <img src="https://i.scdn.co/image/ab6761610000e5ebf00e2ecf7257c5a910d40f34" 
+     *   <img src="https://i.scdn.co/image/ab6761610000e5ebf00e2ecf7257c5a910d40f34"
      *        alt="Moby">
      *   <h3>Moby</h3>
      * </article>
      */
     function genArtistCard(artistInfo) {
-        // Part 2c: TODO
+        // Image fields populating
+        const img = gen("img");
+        if (artistInfo.images[0] !== undefined) {
+            img.src = artistInfo.images[0].url;
+        }
+        img.alt = artistInfo.name;
+
+        // Artist name in h3
+        const heading = gen("h3");
+        heading.textContent = artistInfo.name;
+
+        // Making the actual card
+        const card = gen("article");
+        card.appendChild(img);
+        card.appendChild(heading);
+        card.addEventListener("click", () => {
+            fetchArtistTopTracks(artistInfo.id);
+        });
+
+        return card;
     }
 
     /**
      * Uses the 'top-tracks' Spotify API endpoint:
      * https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-artists-top-tracks
-     * Given a Spotify artistId, fetches top tracks for that artist and 
+     * Given a Spotify artistId, fetches top tracks for that artist and
      * updates the module-global tracks variable with initializeTracks.
      * If an error occurs, displays a user-friendly message, otherwise hides any
      * previous contents of #message-area.
@@ -130,22 +191,47 @@
      * @returns none
      */
     async function fetchArtistTopTracks(artistId) {
-        // Part 3a: TODO
-        // Reminder: Set fetch header options with { Authorization: Bearer _accessToken_ }
+        try {
+            let resp = await fetch(ARTIST_EP + artistId + "/top-tracks?market=US", {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            resp = checkStatus(resp);
+            const tracksData = await resp.json();
+            ((data) => {
+                qs("#message-area").classList.add("hidden");
+                initializeTracks(data);
+                populateTracks();
+                showSection("play-view");
+            })(tracksData);
+        } catch (err) {
+            handleError(err);
+        }
     }
 
     /**
-    * Clears #tracks-container and re-populates it with tracks represented in 
-    * the module-global `tracks` variable. Use sortTracksByGameIdx before populating
-    * #track-container with each article generated from genTrackCard.
-    * @returns none
-    */
+     * Clears #tracks-container and re-populates it with tracks represented in
+     * the module-global `tracks` variable. Use sortTracksByGameIdx before populating
+     * #track-container with each article generated from genTrackCard.
+     * @returns none
+     */
     function populateTracks() {
-        // Part 3b: TODO
+        // Clears #track-container
+        const trackContainer = qs("#track-container");
+        trackContainer.innerHTML = "";
+
+        sortTracksByGameIdx();
+
+        // Populate #track-container
+        tracks.forEach((track) => {
+            const trackCard = genTrackCard(track);
+            trackContainer.appendChild(trackCard);
+        });
     }
 
-    /* ------------------------------ Provided Helper Functions ------------------------------ */  
-    
+    /* ------------------------------ Provided Helper Functions ------------------------------ */
+
     /**
      * Hides the currently-visible section, reveals the
      * section with the given sectionId.
@@ -160,10 +246,10 @@
         id(sectionId).classList.remove("hidden");
     }
 
-    /* -------------------- Track Management/Sorting -------------------- */  
-    
+    /* -------------------- Track Management/Sorting -------------------- */
+
     /**
-     * Takes info about a track and returns an article 
+     * Takes info about a track and returns an article
      * holding relevant track info with up/down button functionality.
      * @param {Object} trackInfo - one item from `tracks` module-global. See initializeTracks.
      * @return {DOMElement} - the article element representing the relevant track info.
@@ -225,7 +311,7 @@
             return {
                 name: track.name,
                 actualIdx: idx,
-                gameIdx: gameIdxs[idx]
+                gameIdx: gameIdxs[idx],
             };
         });
     }
@@ -236,12 +322,12 @@
      * @returns none
      */
     function sortTracksByGameIdx() {
-       tracks.sort((a, b) => a.gameIdx - b.gameIdx);
+        tracks.sort((a, b) => a.gameIdx - b.gameIdx);
     }
-    
+
     /**
      * Sorts the `tracks` module-global by the property `actualIdx`
-     * (Spotify's provided popularity index) in ascending order. This 
+     * (Spotify's provided popularity index) in ascending order. This
      * will modify the array in-place.
      * @returns none
      */
@@ -254,11 +340,14 @@
      * Switches elements in the "tracks" variable then rebuilds the DOM.
      * If track can't be moved up/down, does nothing.
      * @param {Number} currIdx - game index of track related to event
-     * @param {Number} shift - shift amount to move track (-1 to move up, 1 to move down) 
+     * @param {Number} shift - shift amount to move track (-1 to move up, 1 to move down)
      */
     function moveTrack(currIdx, shift) {
-        if ((shift < 0 && currIdx + shift >= 0) || // up case
-            (shift > 0 && currIdx !== tracks.length - shift)) { // down case
+        if (
+            (shift < 0 && currIdx + shift >= 0) || // up case
+            (shift > 0 && currIdx !== tracks.length - shift)
+        ) {
+            // down case
             // track card to be replaced
             const tempTrack = tracks[currIdx + shift];
             tempTrack.gameIdx = currIdx;
@@ -273,7 +362,7 @@
         }
     }
 
-    /* -------------------- Game Processing -------------------- */  
+    /* -------------------- Game Processing -------------------- */
 
     /**
      * Populates the results-view with a final score and lists of expected
@@ -316,7 +405,18 @@
         return 1 - kendall(tracks.map((t) => t.actualIdx));
     }
 
-    /* -------------------- Custom Error-handling -------------------- */  
+    /* -------------------- Custom Error-handling -------------------- */
+
+    /**
+     * Checks the status of a fetch API response
+     * @param {Response} resp - the response we get from after calling fetch
+     */
+    function checkStatus(resp) {
+        if (!resp.ok) {
+            throw Error("Error in request: " + response.statusText);
+        }
+        return resp;
+    }
 
     /**
      * Displays an error message on the page, hiding any previous results.
@@ -324,7 +424,7 @@
      * Otherwise (the errMsg is an object or missing), a generic message is displayed.
      * @param {String} errMsg - optional specific error message to display on page.
      */
-     function handleError(errMsg) {
+    function handleError(errMsg) {
         if (typeof errMsg === "string") {
             id("message-area").textContent = errMsg;
         } else {
