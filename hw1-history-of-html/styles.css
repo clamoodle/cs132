@@ -9,49 +9,74 @@
  */
 
 /* Font: ubuntu 400 & 700 */
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap");
 
-body, h1 {
+body,
+h1,
+nav a,
+ul a {
   margin: 0;
 }
 
 body {
-  background-color: #c9e4ca;  /* light green color */
-  font-family: 'Ubuntu', Verdana, sans-serif;
+  background-color: #c9e4ca; /* light green color */
+  font-family: "Ubuntu", Verdana, sans-serif;
 }
 
-body, #examples > div, #html-comparison > div {
+body,
+#examples > div,
+#html-comparison > div {
   flex-direction: column;
 }
 
-main, header > div, footer, #examples, #examples > div, nav ul, #html-comparison, 
-#html-comparison > div, div.main-structure {
+main,
+footer,
+#examples,
+#examples > div,
+nav ul,
+#html-comparison,
+#html-comparison > div,
+header h1,
+div.main-structure {
   display: flex;
 }
 
-main, header > div, footer, #examples, #examples > div, #html-comparison,
+header h1,
+main,
+footer,
+#examples,
+#examples > div,
+#html-comparison,
 div.main-structure {
   justify-content: space-between;
 }
 
-main, nav a, #html-comparison div {
+main,
+nav a,
+ul a,
+#html-comparison div {
   padding: 5px;
 }
 
-main > section, #examples {
+main > section,
+#examples {
   padding: 10px;
 }
 
-header > div, footer {
+header h1,
+footer {
   align-items: center;
 }
 
-h1, footer, aside {
+h1,
+footer,
+aside {
   padding-left: 10px;
   padding-right: 10px;
 }
 
-h1, footer {
+h1,
+footer {
   height: 60px;
 }
 
@@ -68,11 +93,18 @@ p {
   line-height: 1.4rem;
 }
 
-h1, h2, code, p#fake-h1, main > :not(aside) a, main > :not(aside) a:visited, footer * {
+h1,
+h2,
+code,
+p#fake-h1,
+main > :not(aside) a,
+main > :not(aside) a:visited,
+footer * {
   color: #3b6065; /* dark green color */
 }
 
-h1, h2 {
+h1,
+h2 {
   font-weight: 400;
 }
 
@@ -80,17 +112,19 @@ h1, h2 {
   margin: 5px;
 }
 
-#examples > div, #html-comparison > div {
+#examples > div,
+#html-comparison > div {
   width: 45%;
 }
 
 #examples > div {
   padding-left: 2%;
   padding-right: 2%;
-  background-color: #fdfdfd; /* almost white color */;
 }
 
-#examples > div > p, figcaption, blockquote {
+#examples > div > p,
+figcaption,
+blockquote {
   font-style: italic;
 }
 
@@ -99,11 +133,12 @@ h1, h2 {
 }
 
 pre {
-  background-color: #d3d3d3;  /* grey */
+  background-color: #d3d3d3; /* grey */
   overflow-x: scroll;
 }
 
-p#fake-h1, code {
+p#fake-h1,
+code {
   font-weight: bold;
 }
 
@@ -113,8 +148,9 @@ p#fake-h1 {
 }
 
 code {
-  font-size: 24pt;
-  font-family: 'Courier New', Courier, monospace;
+  font-size: inherit;
+  color: inherit;
+  font-family: "Courier New", Courier, monospace;
 }
 
 a {
@@ -122,12 +158,10 @@ a {
   text-decoration: none;
 }
 
-aside a:visited, nav a, nav a:visited  {
-  color: #c9e4ca;  /* light green color */
-}
-
-nav a {
-  margin: 0px;
+aside a:visited,
+nav a,
+nav a:visited {
+  color: #c9e4ca; /* light green color */
 }
 
 nav ul {
@@ -138,10 +172,13 @@ nav li {
   margin-left: 15px;
 }
 
-header nav, aside, #examples {
+header nav,
+aside,
+#examples {
   background-color: #3b6065; /* dark green color */
 }
 
+#examples > div,
 main > section {
   background-color: #fdfdfd; /* almost white color */
 }
@@ -168,11 +205,16 @@ img {
   width: 100%;
 }
 
-blockquote, #html-comparison > div div {
+blockquote {
+  border-bottom: 2px solid black;
+}
+
+#html-comparison > div div {
   border: 2px solid black;
 }
 
-figure#tim-quote > figcaption, #examples > div > p {
+figure#tim-quote > figcaption,
+#examples > div > p {
   text-align: right;
 }
 
